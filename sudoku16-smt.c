@@ -3,7 +3,7 @@
 
 const char *const smtHeader =
     "(set-info :smt-lib-version 2.6)\n"
-    "(set-logic QF_LIA)\n"
+    "(set-logic QF_NIA)\n"
     "(set-info :status sat)\n"
     "\0";
 

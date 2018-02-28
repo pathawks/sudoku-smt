@@ -2,7 +2,7 @@
 
 const char *const smtHeader =
     "(set-info :smt-lib-version 2.6)\n"
-    "(set-logic QF_LIA)\n"
+    "(set-logic QF_NIA)\n"
     "(set-info :status sat)\n"
     "\0";
 
@@ -45,21 +45,29 @@ int isNumber(char c) {
     return ('1' <= c && c <= '9');
 }
 
-int isValid(char c) {
-    return isNumber(c) || (c == '_') || (c == '.');
+int isUnknown(char c) {
+    return (c == '_') || (c == '.');
 }
 
 int main(void) {
     int board[height][width];
+    int unknowns = 0;
     for (int x=0; x<width; ++x) {
         for (int y=0; y<height; ++y) {
-            do {
+            for(;;) {
                 board[y][x] = getchar();
-            } while (!isValid(board[y][x]));
+                if (isUnknown(board[y][x])) {
+                    ++unknowns;
+                    break;
+                } else if (isNumber(board[y][x])) {
+                    break;
+                }
+            }
         }
     }
 
     fputs(smtHeader, stdout);
+    printf("(set-info :unknowns %d)\n", unknowns);
 
     for (int x=0; x<width; ++x) {
         for (int y=0; y<height; ++y) {
