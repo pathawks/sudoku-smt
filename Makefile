@@ -3,6 +3,9 @@ smt-files   := $(foreach file,$(txt-files),$(patsubst %.txt,%.smt,$(file)))
 txt16-files := $(wildcard 16x16/*.txt)
 smt16-files := $(foreach file,$(txt16-files),$(patsubst %.txt,%.smt,$(file)))
 
+clean:
+	rm -f $(smt-files) $(smt16-files) 9x9.zip 16x16.zip sudoku-smt sudoku16-smt
+
 sudoku16-smt: sudoku16-smt.c
 	gcc sudoku16-smt.c -O2 -o sudoku16-smt
 
