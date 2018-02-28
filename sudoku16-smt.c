@@ -4,7 +4,6 @@
 const char *const smtHeader =
     "(set-info :smt-lib-version 2.6)\n"
     "(set-logic QF_LIA)\n"
-//  "(set-option :produce-models true)\n"
     "(set-info :status sat)\n"
     "\0";
 
@@ -23,6 +22,7 @@ const char *const smtFooter =
 
 const int height = 16;
 const int width  = 16;
+int produceModels = 0;
 
 void footer(void);
 
@@ -54,6 +54,9 @@ int main(void) {
     }
 
     fputs(smtHeader, stdout);
+    if (produceModels) {
+        puts("(set-option :produce-models true)");
+    }
 
     for (int x=0; x<width; ++x) {
         for (int y=0; y<height; ++y) {
@@ -92,13 +95,15 @@ void footer(void) {
             fputs("))\n", stdout);
         }
     puts("(check-sat)");
-//  for (int x=0; x<16; ++x) {
-//      fputs("(get-value (", stdout);
-//      for (int y=0; y<16; ++y) {
-//          if (y) fputs(" ", stdout);
-//          printf("board%X%X", x, y);
-//      }
-//      fputs("))\n", stdout);
-//  }
+    if (produceModels) {
+        for (int x=0; x<16; ++x) {
+            fputs("(get-value (", stdout);
+            for (int y=0; y<16; ++y) {
+                if (y) fputs(" ", stdout);
+                printf("board%X%X", x, y);
+            }
+            fputs("))\n", stdout);
+        }
+    }
     puts("(exit)");
 }
