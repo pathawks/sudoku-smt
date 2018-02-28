@@ -7,19 +7,6 @@ const char *const smtHeader =
     "(set-info :status sat)\n"
     "\0";
 
-const char *const smtFooter =
-    "(check-sat)\n"
-    "(get-value (board11 board12 board13 board14 board15 board16 board17 board18 board19))\n"
-    "(get-value (board21 board22 board23 board24 board25 board26 board27 board28 board29))\n"
-    "(get-value (board31 board32 board33 board34 board35 board36 board37 board38 board39))\n"
-    "(get-value (board41 board42 board43 board44 board45 board46 board47 board48 board49))\n"
-    "(get-value (board51 board52 board53 board54 board55 board56 board57 board58 board59))\n"
-    "(get-value (board61 board62 board63 board64 board65 board66 board67 board68 board69))\n"
-    "(get-value (board71 board72 board73 board74 board75 board76 board77 board78 board79))\n"
-    "(get-value (board81 board82 board83 board84 board85 board86 board87 board88 board89))\n"
-    "(get-value (board91 board92 board93 board94 board95 board96 board97 board98 board99))\n"
-    "\0";
-
 const int height = 16;
 const int width  = 16;
 int produceModels = 0;
