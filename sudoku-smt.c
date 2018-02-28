@@ -50,7 +50,6 @@ const char *const smtFooter =
 
 const int height = 9;
 const int width  = 9;
-int board[height][width];
 
 int isNumber(char c) {
     return ('1' <= c && c <= '9');
@@ -61,6 +60,7 @@ int isValid(char c) {
 }
 
 int main(void) {
+    int board[height][width];
     for (int x=0; x<width; ++x) {
         for (int y=0; y<height; ++y) {
             do {

@@ -23,7 +23,6 @@ const char *const smtFooter =
 
 const int height = 16;
 const int width  = 16;
-int board[height][width];
 
 void footer(void);
 
@@ -36,6 +35,7 @@ int isValid(char c) {
 }
 
 int main(void) {
+    int board[height][width];
     for (int x=0; x<width; ++x) {
         for (int y=0; y<height; ++y) {
             do {
