@@ -63,10 +63,12 @@ int main(void) {
 
     for (int x=0; x<width; ++x) {
         for (int y=0; y<height; ++y) {
+            char xpos = x+'1';
+            char ypos = y+'1';
             if (isNumber(board[y][x])) {
-                printf("(declare-const board%d%d Int)(assert (= %c board%d%d))\n", x+1,y+1,board[y][x],x+1,y+1);
+                printf("(declare-const board%c%c Int)(assert (= %c board%c%c))\n", xpos,ypos,board[y][x],xpos,ypos);
             } else {
-                printf("(declare-const board%d%d Int)(assert (and (<= 1 board%d%d)(<= board%d%d 9)))\n", x+1,y+1,x+1,y+1,x+1,y+1);
+                printf("(declare-const board%c%c Int)(assert (and (<= 1 board%c%c)(<= board%c%c 9)))\n", xpos,ypos,xpos,ypos,xpos,ypos);
             }
         }
     }

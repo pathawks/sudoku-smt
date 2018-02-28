@@ -29,9 +29,7 @@ int main(void) {
                 int c;
                 c = getchar();
                 if (c >= 'A') {
-                    c = tolower(c);
-                    c -= 'a';
-                    c += 10;
+                    c = tolower(c) - 'a' + 10;
                 } else {
                     c -= '0';
                 }
@@ -47,10 +45,12 @@ int main(void) {
 
     for (int x=0; x<width; ++x) {
         for (int y=0; y<height; ++y) {
+            char xpos = x < 10 ? x + '0' : x + 'A' - 10;
+            char ypos = y < 10 ? y + '0' : y + 'A' - 10;
             if (isNumber(board[y][x])) {
-                printf("(declare-const board%X%X Int)(assert (= %d board%X%X))\n", x,y,board[y][x],x,y);
+                printf("(declare-const board%c%c Int)(assert (= %d board%c%c))\n", xpos,ypos,board[y][x],xpos,ypos);
             } else {
-                printf("(declare-const board%X%X Int)(assert (and (<= 0 board%X%X)(< board%X%X 16)))\n", x,y,x,y,x,y);
+                printf("(declare-const board%c%c Int)(assert (and (<= 0 board%c%c)(< board%c%c 16)))\n", xpos,ypos,xpos,ypos,xpos,ypos);
             }
         }
     }
