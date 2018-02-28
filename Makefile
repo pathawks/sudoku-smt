@@ -7,26 +7,19 @@ clean:
 	rm -f $(smt-files) $(smt16-files) 9x9.zip 16x16.zip sudoku-smt sudoku16-smt
 
 sudoku16-smt: sudoku16-smt.c
-	gcc sudoku16-smt.c -O2 -o sudoku16-smt
+	$(CC) $< $(CFLAGS) -o $@
 
 sudoku-smt: sudoku-smt.c
-	gcc sudoku-smt.c -O2 -o sudoku-smt
+	$(CC) $< $(CFLAGS) -o $@
 
-define smt9
-$(1).smt: $(1).txt sudoku-smt
-	./sudoku-smt < $(1).txt > $(1).smt
-endef
+9x9/%.smt: 9x9/%.txt sudoku-smt
+	./sudoku-smt < $< > $@
 
-define smt16
-$(1).smt: $(1).txt sudoku-smt
-	./sudoku16-smt < $(1).txt > $(1).smt
-endef
-
-$(foreach file,$(txt-files),  $(eval $(call smt9, $(patsubst %.txt,%,$(file)))))
-$(foreach file,$(txt16-files),$(eval $(call smt16,$(patsubst %.txt,%,$(file)))))
+16x16/%.smt: 16x16/%.txt sudoku16-smt
+	./sudoku16-smt < $< > $@
 
 9x9.zip: $(smt-files)
-	zip -9DX 9x9.zip $(smt-files)
+	zip -9DX $@ $^
 
 16x16.zip: $(smt16-files)
-	zip -9DX 16x16.zip $(smt16-files)
+	zip -9DX $@ $^
