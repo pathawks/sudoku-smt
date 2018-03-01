@@ -3,9 +3,8 @@
 
 const char *const smtHeader =
     "(set-info :smt-lib-version 2.6)\n"
-    "(set-logic QF_BVFS)\n"
+    "(set-logic QF_BV)\n"
     "(set-info :status sat)\n"
-    "(declare-const possible_values (Set (_ BitVec 4)))\n"
     "\0";
 
 const int height = 16;
@@ -49,7 +48,7 @@ int main(void) {
             char xpos = x < 10 ? x + '0' : x + 'A' - 10;
             char ypos = y < 10 ? y + '0' : y + 'A' - 10;
             if (isNumber(board[y][x])) {
-                printf("(declare-const board%c%c (_ BitVec 4))(assert (= #x%x board%c%c))\n", xpos,ypos,board[y][x],xpos,ypos);
+                printf("(declare-const board%c%c (_ BitVec 4))(assert (= #x%X board%c%c))\n", xpos,ypos,board[y][x],xpos,ypos);
             } else {
                 printf("(declare-const board%c%c (_ BitVec 4))\n", xpos,ypos);
             }
