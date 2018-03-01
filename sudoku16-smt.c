@@ -3,8 +3,10 @@
 
 const char *const smtHeader =
     "(set-info :smt-lib-version 2.6)\n"
-    "(set-logic QF_IDL)\n"
+    "(set-logic QF_UFFS)\n"
     "(set-info :status sat)\n"
+    "(declare-sort XInt 0)\n"
+    "(declare-const possible_values (Set XInt))\n"
     "\0";
 
 const int height = 16;
@@ -43,14 +45,23 @@ int main(void) {
         puts("(set-option :produce-models true)");
     }
 
+    for (int x=0; x < 16; ++x) {
+        printf("(declare-const X%d XInt)\n", x);
+    }
+    fputs("(assert (= (insert ", stdout);
+    for (int x=0; x < 15; ++x) {
+        printf("X%d ", x);
+    }
+    fputs("(singleton X15)) possible_values))\n", stdout);
+
     for (int x=0; x<width; ++x) {
         for (int y=0; y<height; ++y) {
             char xpos = x < 10 ? x + '0' : x + 'A' - 10;
             char ypos = y < 10 ? y + '0' : y + 'A' - 10;
             if (isNumber(board[y][x])) {
-                printf("(declare-const board%c%c Int)(assert (= %d board%c%c))\n", xpos,ypos,board[y][x],xpos,ypos);
+                printf("(declare-const board%c%c XInt)(assert (= X%d board%c%c))\n", xpos,ypos,board[y][x],xpos,ypos);
             } else {
-                printf("(declare-const board%c%c Int)(assert (and (<= 0 board%c%c)(< board%c%c 16)))\n", xpos,ypos,xpos,ypos,xpos,ypos);
+                printf("(declare-const board%c%c XInt)(assert (member board%c%c possible_values))\n", xpos,ypos,xpos,ypos);
             }
         }
     }
