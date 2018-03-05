@@ -8,14 +8,8 @@ clean:
 	rm -f $(smt-files) $(smt16-files) 9x9.zip 16x16.zip all.zip sudoku-smt sudoku16-smt
 
 sudoku16-int: sudoku16-int.c
-	$(CC) $< $(CFLAGS) -o $@
-
 sudoku16-bv: sudoku16-bv.c
-	$(CC) $< $(CFLAGS) -o $@
-
 sudoku16-uffs: sudoku16-uffs.c
-	$(CC) $< $(CFLAGS) -o $@
-
 sudoku-smt: sudoku-smt.c
 	$(CC) $< $(CFLAGS) -o $@
 
@@ -34,10 +28,6 @@ sudoku-smt: sudoku-smt.c
 all-smt: $(smt-files) $(smt16-files)
 
 9x9.zip: $(smt-files)
-	zip $(zip-flags) $@ $^
-
 16x16.zip: $(smt16-files)
-	zip $(zip-flags) $@ $^
-
 all.zip: $(smt-files) $(smt16-files)
 	zip $(zip-flags) $@ $^
