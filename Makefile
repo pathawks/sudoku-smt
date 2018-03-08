@@ -1,7 +1,7 @@
 txt-files   := $(wildcard 9x9/*.txt)
-smt-files   := $(foreach file,$(txt-files),$(patsubst %.txt,%.smt,$(file)))
+smt-files   := $(patsubst %.txt,%.smt,$(txt-files))
 txt16-files := $(wildcard 16x16/*.txt)
-smt16-files := $(foreach file,$(txt16-files),$(patsubst %.txt,%int.smt,$(file))) $(foreach file,$(txt16-files),$(patsubst %.txt,%bv.smt,$(file))) $(foreach file,$(txt16-files),$(patsubst %.txt,%uffs.smt,$(file)))
+smt16-files := $(patsubst %.txt,%int.smt,$(txt16-files)) $(patsubst %.txt,%bv.smt,$(txt16-files)) $(patsubst %.txt,%uffs.smt,$(txt16-files))
 zip-flags   := -9DX
 
 clean:
@@ -28,6 +28,10 @@ sudoku-smt: sudoku-smt.c
 all-smt: $(smt-files) $(smt16-files)
 
 9x9.zip: $(smt-files)
+	zip $(zip-flags) $@ $^
+
 16x16.zip: $(smt16-files)
+	zip $(zip-flags) $@ $^
+
 all.zip: $(smt-files) $(smt16-files)
 	zip $(zip-flags) $@ $^
