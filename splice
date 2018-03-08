@@ -1,0 +1,10 @@
+#!/bin/bash
+
+while read l; do
+    PUZZLE=$(echo -n "$l" | cut -f1 -d "&" | tr "0" "." | fold -w9)
+    DIR=$(echo -n "$l" | cut -f2 -d "&" | sed -e 's/_//g' | tr " " "_")
+    FILE=$(echo -ne "$l" | cut -f3 -d "&" | sed -e 's/ #/-/g' | sed -e "s/[[:space:]]*$//g" | tr " " "_" | tr -d "'[]")
+
+#   [ -d "9x9/$DIR" ] || mkdir "9x9/$DIR"
+    echo "$PUZZLE" > "9x9/$DIR--$FILE.txt"
+done
